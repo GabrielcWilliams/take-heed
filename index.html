@@ -401,7 +401,7 @@ select option{background:var(--black-3)}
     <div class="greeting-time" id="greetingTime">Good morning</div>
     <div class="greeting-name">Gabriel <span>Williams</span></div>
   </div>
-  <div class="edit-btn-wrap" style="display:flex;gap:8px;"><button class="btn btn-blue btn-sm" onclick="getMorningBriefing()">☀️ Briefing</button><button class="btn btn-surface btn-sm" onclick="enterEditMode('daily-wrap')">✦ Edit</button></div>
+  <div class="edit-btn-wrap"><button class="btn btn-surface btn-sm" onclick="enterEditMode('daily-wrap')">✦ Edit</button></div>
   <div class="stats-strip">
     <div class="stat-chip"><span class="stat-chip-val" id="stat-habits">0/0</span><span class="stat-chip-label">Habits</span></div>
     <div class="stat-chip"><span class="stat-chip-val" id="stat-todos">0</span><span class="stat-chip-label">Tasks</span></div>
@@ -410,17 +410,6 @@ select option{background:var(--black-3)}
   </div>
   <div class="quote-block"><span class="quote-edit" onclick="openModal('quoteModal')">✏️</span><div class="quote-text" id="quoteText">"For I know the plans I have for you, declares the Lord, plans for welfare and not for evil, to give you a future and a hope."</div><div class="quote-ref" id="quoteRef">— Jeremiah 29:11</div></div>
 
-  <!-- MORNING BRIEFING CARD -->
-  <div id="briefing-card" style="margin:12px 16px 0;background:linear-gradient(135deg,#0d1a2e,rgba(10,132,255,.08));border:.5px solid var(--blue-border);border-radius:var(--radius);overflow:hidden;display:none;">
-    <div style="padding:14px 16px 10px;display:flex;align-items:center;justify-content:space-between;">
-      <div>
-        <div style="font-family:var(--font-m);font-size:9px;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;">AI Morning Briefing</div>
-        <div style="font-size:13px;font-weight:600;color:var(--white);">Good morning, Gabriel</div>
-      </div>
-      <span id="briefing-close" onclick="document.getElementById('briefing-card').style.display='none'" style="color:var(--grey-3);font-size:20px;cursor:pointer;padding:4px;">×</span>
-    </div>
-    <div id="briefing-text" style="padding:0 16px 16px;font-size:13px;color:var(--white-3);line-height:1.7;"></div>
-  </div>
 
   <div id="daily-wrap">
     <div class="draggable-block" data-sid="d-reminders">
@@ -485,58 +474,30 @@ select option{background:var(--black-3)}
   <div class="edit-btn-wrap"><button class="btn btn-surface btn-sm" onclick="enterEditMode('war-hearing-wrap')">✦ Edit Hearing</button></div>
   <div class="sub-tabs">
     <div class="sub-tab active" onclick="switchTab('war','hearing',this)">Hearing</div>
-    <div class="sub-tab" onclick="switchTab('war','reading',this)">Reading</div>
     <div class="sub-tab" onclick="switchTab('war','prayer',this)">Prayer Bomb</div>
     <div class="sub-tab" onclick="switchTab('war','flock',this)">Flock</div>
+    <div class="sub-tab" onclick="switchTab('war','books',this)">Books</div>
     <div class="sub-tab" onclick="switchTab('war','wdata',this)">Data</div>
   </div>
 
   <!-- HEARING -->
   <div class="sub-panel active page-content" id="war-hearing">
     <div id="war-hearing-wrap">
-      <div class="draggable-block" data-sid="wh-qt">
-        <div class="card" style="margin-top:14px;"><div class="card-inner">
-          <div class="card-label">Quiet Time — Today</div>
-          <div class="toggle-wrap" onclick="toggleQT()" style="margin-bottom:12px;"><span style="font-size:15px;font-weight:500;">Spent time with God today</span><div class="ios-toggle" id="qtToggle"></div></div>
-          <textarea style="min-height:80px;" id="qtNotesTA" placeholder="What did God show you today?"></textarea>
-          <div style="display:flex;justify-content:flex-end;margin-top:10px;"><button class="btn btn-blue btn-sm" onclick="saveQT()">Save Notes</button></div>
-        </div></div>
-      </div>
       <div class="draggable-block" data-sid="wh-messages">
         <div class="card"><div class="card-inner">
           <div class="card-label">Messages & Playlists <button class="btn btn-ghost" style="padding:0;font-size:13px;" onclick="openModal('hearingModal')">+ Add</button></div>
           <div id="hearingList"><div class="empty">Add sermons, playlists, podcasts</div></div>
         </div></div>
       </div>
-      <div class="draggable-block" data-sid="wh-season">
+      <div class="draggable-block" data-sid="wh-music">
         <div class="card"><div class="card-inner">
-          <div class="card-label">What God is Speaking This Season</div>
-          <textarea style="min-height:100px;" id="seasonTA" placeholder="Themes, words, scriptures..."></textarea>
-          <div style="display:flex;justify-content:flex-end;margin-top:10px;"><button class="btn btn-blue btn-sm" onclick="saveSeason()">Save</button></div>
+          <div class="card-label" style="color:#fc3c44;">Apple Music 🎵 <button class="btn btn-ghost" style="padding:0;font-size:13px;color:#fc3c44;" onclick="openModal('appleMusicModal')">+ Add</button></div>
+          <div id="appleMusicList"><div class="empty">Add playlists — tap to open in Apple Music</div></div>
         </div></div>
       </div>
     </div>
   </div>
 
-  <!-- READING -->
-  <div class="sub-panel page-content" id="war-reading">
-    <div class="card" style="margin-top:14px;"><div class="card-inner">
-      <div class="card-label">Bible Reading Log <button class="btn btn-ghost" style="padding:0;font-size:13px;" onclick="openModal('bibleModal')">+ Log</button></div>
-      <div id="bibleList"><div class="empty">Log your Bible readings</div></div>
-    </div></div>
-    <div class="card"><div class="card-inner">
-      <div class="card-label">Open Bible App</div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <button class="btn btn-surface btn-full" style="justify-content:flex-start;gap:12px;" onclick="window.open('https://www.bible.com','_blank')">📖 YouVersion Bible</button>
-        <button class="btn btn-surface btn-full" style="justify-content:flex-start;gap:12px;" onclick="window.open('https://www.esv.org','_blank')">📘 ESV Online</button>
-        <button class="btn btn-surface btn-full" style="justify-content:flex-start;gap:12px;" onclick="window.open('https://www.biblegateway.com','_blank')">🔗 Bible Gateway</button>
-      </div>
-    </div></div>
-    <div class="card"><div class="card-inner">
-      <div class="card-label">Spiritual Books <button class="btn btn-ghost" style="padding:0;font-size:13px;" onclick="openModal('spiritBookModal')">+ Add</button></div>
-      <div id="spiritBookList"><div class="empty">Add books you're reading this season</div></div>
-    </div></div>
-  </div>
 
   <!-- PRAYER BOMB -->
   <div class="sub-panel page-content" id="war-prayer">
@@ -570,6 +531,19 @@ select option{background:var(--black-3)}
       <div class="sub-tab" style="font-size:9px;padding:5px 12px;" onclick="filterFlock('archive',this)">Archive</div>
     </div>
     <div id="flockList"><div class="empty"><span class="empty-icon">🐑</span>Add your first flock member</div></div>
+  </div>
+
+  <!-- WAR BOOKS -->
+  <div class="sub-panel page-content" id="war-books">
+    <div class="card" style="margin-top:14px;"><div class="card-inner">
+      <div class="card-label">Bible Reading Log 📖 <button class="btn btn-ghost" style="padding:0;font-size:13px;" onclick="openBibleModal()">+ Log</button></div>
+      <div id="bibleList"><div class="empty">Log the books & chapters you're reading</div></div>
+    </div></div>
+    <div style="margin-top:14px;display:flex;justify-content:flex-end;margin-bottom:8px;gap:8px;">
+      <label class="btn btn-surface btn-sm" style="cursor:pointer;">📎 Upload EPUB<input type="file" accept=".epub" style="display:none;" onchange="handleEpubUpload(event)"></label>
+      <button class="btn btn-blue btn-sm" onclick="openModal('bookModal')">+ Add Book</button>
+    </div>
+    <div class="card"><div class="card-inner"><div class="card-label">Books 📚</div><div id="bookList"><div class="empty"><span class="empty-icon">📚</span>Add books or upload EPUBs</div></div></div></div>
   </div>
 
   <!-- WAR DATA -->
@@ -648,11 +622,7 @@ select option{background:var(--black-3)}
       <div class="card-label">Work Quick Links <button class="btn btn-ghost" style="padding:0;font-size:13px;" onclick="openModal('workLinkModal')">+ Add</button></div>
       <div id="workLinkList"><div class="empty">Add Jira, Slack, SIEM and other tools</div></div>
     </div></div>
-    <div class="card"><div class="card-inner">
-      <div class="card-label">Today's Work Notes</div>
-      <textarea style="min-height:100px;" id="workNotesTA" placeholder="Incidents, tasks, notes from today..."></textarea>
-      <div style="display:flex;justify-content:flex-end;margin-top:10px;"><button class="btn btn-blue btn-sm" onclick="saveWorkNotes()">Save</button></div>
-    </div></div>
+
   </div>
 </section>
 
@@ -661,26 +631,11 @@ select option{background:var(--black-3)}
   <div class="page-header"><div class="page-title">Life 📚</div><div class="page-subtitle" style="color:var(--blue);">2 Peter 1:3</div></div>
   <div class="edit-btn-wrap"><button class="btn btn-surface btn-sm" onclick="enterEditMode('life-books-wrap')">✦ Edit Layout</button></div>
   <div class="sub-tabs">
-    <div class="sub-tab active" onclick="switchTab('life','books',this)">Books</div>
-    <div class="sub-tab" onclick="switchTab('life','courses',this)">Courses</div>
+    <div class="sub-tab active" onclick="switchTab('life','courses',this)">Courses</div>
     <div class="sub-tab" onclick="switchTab('life','skills',this)">Skills</div>
-    <div class="sub-tab" onclick="switchTab('life','podcasts',this)">Podcasts</div>
   </div>
 
-  <!-- BOOKS -->
-  <div class="sub-panel active page-content" id="life-books">
-    <div id="life-books-wrap">
-      <div class="draggable-block" data-sid="lb-books">
-        <div style="margin-top:14px;display:flex;justify-content:flex-end;margin-bottom:8px;gap:8px;">
-          <label class="btn btn-surface btn-sm" style="cursor:pointer;">📎 Upload EPUB<input type="file" accept=".epub" style="display:none;" onchange="handleEpubUpload(event)"></label>
-          <button class="btn btn-blue btn-sm" onclick="openModal('bookModal')">+ Add Book</button>
-        </div>
-        <div id="bookList"><div class="empty"><span class="empty-icon">📚</span>Add books or upload EPUBs</div></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="sub-panel page-content" id="life-courses">
+  <div class="sub-panel active page-content" id="life-courses">
     <div style="margin-top:14px;display:flex;justify-content:flex-end;margin-bottom:8px;"><button class="btn btn-blue" onclick="openModal('courseModal')">+ Add Course</button></div>
     <div class="card"><div class="card-inner"><div class="card-label">In Progress / Planned</div><div id="courseList"><div class="empty">No courses added yet</div></div></div></div>
   </div>
@@ -688,10 +643,7 @@ select option{background:var(--black-3)}
     <div style="margin-top:14px;display:flex;justify-content:flex-end;margin-bottom:8px;"><button class="btn btn-blue" onclick="openModal('skillModal')">+ Add Skill</button></div>
     <div class="card"><div class="card-inner"><div class="card-label">Skills I'm Building</div><div id="skillList"><div class="empty">Add skills you're developing</div></div></div></div>
   </div>
-  <div class="sub-panel page-content" id="life-podcasts">
-    <div style="margin-top:14px;display:flex;justify-content:flex-end;margin-bottom:8px;"><button class="btn btn-blue" onclick="openModal('podcastModal')">+ Add</button></div>
-    <div class="card"><div class="card-inner"><div class="card-label">Content I'm Consuming</div><div id="podcastList"><div class="empty">Add podcasts and content</div></div></div></div>
-  </div>
+
 </section>
 
 <!-- ════════ FINANCE ════════ -->
@@ -808,11 +760,6 @@ select option{background:var(--black-3)}
         <div style="margin-top:10px;"><button class="btn btn-blue btn-full" onclick="saveFinSnapshot()">Update</button></div>
       </div></div>
 
-      <!-- Financial habits -->
-      <div class="card"><div class="card-inner">
-        <div class="card-label">Financial Habits</div>
-        <div id="finHabitList"></div>
-      </div></div>
 
     </div>
   </div>
@@ -916,18 +863,6 @@ select option{background:var(--black-3)}
       <div class="health-tile"><span class="health-tile-icon">⚖️</span><span class="health-tile-val" id="h-weight">—</span><span class="health-tile-label">lbs</span></div>
     </div>
     </div>
-    <div class="draggable-block" data-sid="hd-log">
-    <div class="card"><div class="card-inner">
-      <div class="card-label">Quick Log</div>
-      <div class="form-row-2" style="margin-bottom:10px;">
-        <div><label class="form-label">Steps Today</label><input type="number" id="steps-input" placeholder="0" oninput="quickLogSteps()"></div>
-        <div><label class="form-label">Sleep (hrs)</label><input type="number" id="sleep-input" placeholder="7.5" step="0.5" oninput="quickLogSleep()"></div>
-      </div>
-    </div></div>
-    </div>
-    <div class="draggable-block" data-sid="hd-habits">
-    <div class="card"><div class="card-inner"><div class="card-label">Health Habits</div><div id="healthHabitList"></div></div></div>
-    </div>
     </div>
   </div>
   <div class="sub-panel page-content" id="health-water">
@@ -972,29 +907,24 @@ select option{background:var(--black-3)}
   <div class="page-content" style="padding-top:14px;">
     <div style="display:flex;justify-content:flex-end;margin-bottom:12px;"><button class="btn btn-blue" onclick="openModal('reminderModal')">+ New Reminder</button></div>
     <div class="card"><div class="card-inner"><div class="card-label">All Reminders</div><div id="reminderListFull"><div class="empty">No reminders yet</div></div></div></div>
+    <div class="card" style="margin-top:12px;"><div class="card-inner">
+      <div class="card-label" style="display:flex;align-items:center;justify-content:space-between;">
+        <span>Apple Calendar 📅</span>
+        <div style="display:flex;gap:6px;">
+          <button class="btn btn-ghost" style="padding:0;font-size:12px;color:var(--blue);" onclick="syncAppleCalendar()">↻ Sync</button>
+          <button class="btn btn-ghost" style="padding:0;font-size:12px;" onclick="openModal('calSetupModal')">⚙️</button>
+        </div>
+      </div>
+      <div id="calSyncStatus" style="font-family:var(--font-m);font-size:10px;color:var(--grey-3);margin-bottom:8px;">Not connected — tap ⚙️ to set up</div>
+      <div id="calEventsList"><div class="empty">Connect your iCloud calendar to see upcoming events</div></div>
+    </div></div>
   </div>
 </section>
 
-<!-- AI -->
-<section class="section" id="sec-ai">
-  <div class="page-header"><div class="page-title">AI 🤖</div><div class="page-subtitle">Ask your app anything</div></div>
-  <div class="ai-quick-btns">
-    <div class="ai-quick-btn" onclick="askAI('What tasks do I have today?')">Today's tasks</div>
-    <div class="ai-quick-btn" onclick="askAI('What bills are due soon?')">Upcoming bills</div>
-    <div class="ai-quick-btn" onclick="askAI('How am I doing on my habits?')">Habit check</div>
-    <div class="ai-quick-btn" onclick="askAI('What are my savings goals and progress?')">Savings</div>
-    <div class="ai-quick-btn" onclick="askAI('Summarize my church data.')">Church data</div>
-    <div class="ai-quick-btn" onclick="getMorningBriefing()">☀️ Morning Briefing</div>
-    <div class="ai-quick-btn" onclick="askAI('How many total prayer hours have I logged?')">Prayer hours</div>
-  </div>
-  <div class="ai-chat" id="aiChat">
-    <div class="ai-msg ai"><div class="ai-label">Take Heed AI</div>Hey Gabriel 👋 I'm wired into your app data. Ask me about tasks, bills, church, goals, prayer hours — anything in Take Heed.</div>
-  </div>
-  <div class="ai-input-wrap"><div class="ai-input-row"><input type="text" id="aiInput" placeholder="Ask anything..." onkeydown="if(event.key==='Enter')sendAI()"><button class="btn btn-blue" onclick="sendAI()">Send</button></div></div>
-</section>
+
 
 <section class="section" id="sec-calendar"><div class="stub-wrap"><div class="stub-icon">📅</div><div class="stub-title">Calendar</div><div class="stub-desc">Google + Apple Calendar sync. Coming Phase 7.</div><div class="stub-badge">Phase 7</div></div></section>
-<section class="section" id="sec-family"><div class="stub-wrap"><div class="stub-icon">👨‍👩‍👧‍👦</div><div class="stub-title">Family</div><div class="stub-desc">Shared goals and prayer. Supabase sync coming.</div><div class="stub-badge">Future</div></div></section>
+
 
 </div><!-- /app -->
 
@@ -1016,10 +946,8 @@ select option{background:var(--black-3)}
   <div class="drawer-grid">
     <div class="drawer-item" onclick="showFromDrawer('finance')"><span class="drawer-item-icon">💰</span><span class="drawer-item-label">Finance</span></div>
     <div class="drawer-item" onclick="showFromDrawer('health')"><span class="drawer-item-icon">💪</span><span class="drawer-item-label">Health</span></div>
-    <div class="drawer-item" onclick="showFromDrawer('ai')"><span class="drawer-item-icon">🤖</span><span class="drawer-item-label">AI</span></div>
     <div class="drawer-item" onclick="showFromDrawer('calendar')"><span class="drawer-item-icon">📅</span><span class="drawer-item-label">Calendar</span></div>
     <div class="drawer-item" onclick="showFromDrawer('reminders')"><span class="drawer-item-icon">🔔</span><span class="drawer-item-label">Reminders</span></div>
-    <div class="drawer-item" onclick="showFromDrawer('family')"><span class="drawer-item-icon">👨‍👩‍👧‍👦</span><span class="drawer-item-label">Family</span></div>
   </div>
 </div>
 
@@ -1066,14 +994,6 @@ select option{background:var(--black-3)}
   <button class="btn btn-blue btn-full" onclick="savePrayerSession()">Log Session</button>
 </div></div>
 
-<!-- BIBLE -->
-<div class="modal-overlay" id="bibleModal" onclick="closeMO(event,'bibleModal')"><div class="modal-sheet">
-  <div class="modal-handle"></div><div class="modal-title">Log Bible Reading 📖</div>
-  <div class="form-group"><label class="form-label">Book & Passage</label><input type="text" id="bibleBookInput" placeholder="e.g. John 3, Psalms 23:1-6"></div>
-  <div class="form-group"><label class="form-label">Highlights & Notes</label><textarea id="bibleNotesInput" placeholder="What stood out?" style="min-height:90px;"></textarea></div>
-  <button class="btn btn-blue btn-full" onclick="saveBibleReading()">Save</button>
-</div></div>
-
 <!-- HEARING -->
 <div class="modal-overlay" id="hearingModal" onclick="closeMO(event,'hearingModal')"><div class="modal-sheet">
   <div class="modal-handle"></div><div class="modal-title" id="hearingModalTitle">Add Message / Playlist</div><input type="hidden" id="hearing-edit-id">
@@ -1083,13 +1003,109 @@ select option{background:var(--black-3)}
   <button class="btn btn-blue btn-full" id="hearingSaveBtn" onclick="saveHearing()">Add</button>
 </div></div>
 
-<!-- SPIRIT BOOK -->
-<div class="modal-overlay" id="spiritBookModal" onclick="closeMO(event,'spiritBookModal')"><div class="modal-sheet">
-  <div class="modal-handle"></div><div class="modal-title" id="sbModalTitle">Add Book</div><input type="hidden" id="sb-edit-id">
-  <div class="form-group"><label class="form-label">Title</label><input type="text" id="sbTitleInput" placeholder="Book title"></div>
-  <div class="form-group"><label class="form-label">Author</label><input type="text" id="sbAuthorInput" placeholder="Author"></div>
-  <div class="form-group"><label class="form-label">Notes</label><textarea id="sbNotesInput" placeholder="Why are you reading this?" style="min-height:70px;"></textarea></div>
-  <button class="btn btn-blue btn-full" id="sbSaveBtn" onclick="saveSpiritBook()">Add Book</button>
+<!-- BIBLE READING -->
+<div class="modal-overlay" id="bibleModal" onclick="closeMO(event,'bibleModal')"><div class="modal-sheet">
+  <div class="modal-handle"></div><div class="modal-title" id="bibleModalTitle">Log Bible Reading 📖</div><input type="hidden" id="bible-edit-id">
+  <div class="form-group"><label class="form-label">Book of the Bible</label>
+    <select id="bibleBookSelect">
+      <option value="">Select a book...</option>
+      <option value="Genesis">Genesis</option>
+      <option value="Exodus">Exodus</option>
+      <option value="Leviticus">Leviticus</option>
+      <option value="Numbers">Numbers</option>
+      <option value="Deuteronomy">Deuteronomy</option>
+      <option value="Joshua">Joshua</option>
+      <option value="Judges">Judges</option>
+      <option value="Ruth">Ruth</option>
+      <option value="1 Samuel">1 Samuel</option>
+      <option value="2 Samuel">2 Samuel</option>
+      <option value="1 Kings">1 Kings</option>
+      <option value="2 Kings">2 Kings</option>
+      <option value="1 Chronicles">1 Chronicles</option>
+      <option value="2 Chronicles">2 Chronicles</option>
+      <option value="Ezra">Ezra</option>
+      <option value="Nehemiah">Nehemiah</option>
+      <option value="Esther">Esther</option>
+      <option value="Job">Job</option>
+      <option value="Psalms">Psalms</option>
+      <option value="Proverbs">Proverbs</option>
+      <option value="Ecclesiastes">Ecclesiastes</option>
+      <option value="Song of Solomon">Song of Solomon</option>
+      <option value="Isaiah">Isaiah</option>
+      <option value="Jeremiah">Jeremiah</option>
+      <option value="Lamentations">Lamentations</option>
+      <option value="Ezekiel">Ezekiel</option>
+      <option value="Daniel">Daniel</option>
+      <option value="Hosea">Hosea</option>
+      <option value="Joel">Joel</option>
+      <option value="Amos">Amos</option>
+      <option value="Obadiah">Obadiah</option>
+      <option value="Jonah">Jonah</option>
+      <option value="Micah">Micah</option>
+      <option value="Nahum">Nahum</option>
+      <option value="Habakkuk">Habakkuk</option>
+      <option value="Zephaniah">Zephaniah</option>
+      <option value="Haggai">Haggai</option>
+      <option value="Zechariah">Zechariah</option>
+      <option value="Malachi">Malachi</option>
+      <option value="Matthew">Matthew</option>
+      <option value="Mark">Mark</option>
+      <option value="Luke">Luke</option>
+      <option value="John">John</option>
+      <option value="Acts">Acts</option>
+      <option value="Romans">Romans</option>
+      <option value="1 Corinthians">1 Corinthians</option>
+      <option value="2 Corinthians">2 Corinthians</option>
+      <option value="Galatians">Galatians</option>
+      <option value="Ephesians">Ephesians</option>
+      <option value="Philippians">Philippians</option>
+      <option value="Colossians">Colossians</option>
+      <option value="1 Thessalonians">1 Thessalonians</option>
+      <option value="2 Thessalonians">2 Thessalonians</option>
+      <option value="1 Timothy">1 Timothy</option>
+      <option value="2 Timothy">2 Timothy</option>
+      <option value="Titus">Titus</option>
+      <option value="Philemon">Philemon</option>
+      <option value="Hebrews">Hebrews</option>
+      <option value="James">James</option>
+      <option value="1 Peter">1 Peter</option>
+      <option value="2 Peter">2 Peter</option>
+      <option value="1 John">1 John</option>
+      <option value="2 John">2 John</option>
+      <option value="3 John">3 John</option>
+      <option value="Jude">Jude</option>
+      <option value="Revelation">Revelation</option>
+    </select>
+  </div>
+  <div class="form-group"><label class="form-label">Chapters Read</label>
+    <input type="text" id="bibleChapters" placeholder="e.g. 1-5 or 3, 7, 12" onkeydown="if(event.key==='Enter')saveBibleReading()">
+  </div>
+  <div class="form-group"><label class="form-label">Notes / Highlights</label>
+    <textarea id="bibleNotesInput" placeholder="What stood out?" style="min-height:80px;"></textarea>
+  </div>
+  <button class="btn btn-blue btn-full" id="bibleSaveBtn" onclick="saveBibleReading()">Log Reading</button>
+</div></div>
+
+<!-- CALENDAR SETUP -->
+<div class="modal-overlay" id="calSetupModal" onclick="closeMO(event,'calSetupModal')"><div class="modal-sheet">
+  <div class="modal-handle"></div><div class="modal-title">Connect Apple Calendar 📅</div>
+  <div style="font-family:var(--font-m);font-size:11px;color:var(--grey-3);margin-bottom:16px;line-height:1.6;">
+    Get your iCloud link:<br>
+    <b>iPhone:</b> Calendar app → tap (i) next to a calendar → Share Link → Copy Link<br>
+    <b>Mac:</b> Calendar → right-click calendar → Share Calendar → Copy Link
+  </div>
+  <div class="form-group"><label class="form-label">iCloud Calendar URL</label>
+    <input type="url" id="calUrlInput" placeholder="webcal://p42-caldav.icloud.com/...">
+  </div>
+  <button class="btn btn-blue btn-full" onclick="saveCalUrl()">Save & Sync</button>
+</div></div>
+
+<!-- APPLE MUSIC -->
+<div class="modal-overlay" id="appleMusicModal" onclick="closeMO(event,'appleMusicModal')"><div class="modal-sheet">
+  <div class="modal-handle"></div><div class="modal-title" id="amModalTitle">Add Playlist 🎵</div><input type="hidden" id="am-edit-id">
+  <div class="form-group"><label class="form-label">Playlist Name</label><input type="text" id="am-name" placeholder="e.g. Sunday Worship, Prayer Set" onkeydown="if(event.key==='Enter')saveAppleMusic()"></div>
+  <div class="form-group"><label class="form-label">Apple Music URL</label><input type="url" id="am-url" placeholder="https://music.apple.com/..."></div>
+  <button class="btn btn-full" id="amSaveBtn" onclick="saveAppleMusic()" style="background:#fc3c44;color:#fff;">Add Playlist</button>
 </div></div>
 
 <!-- MEMBER -->
@@ -1200,7 +1216,6 @@ select option{background:var(--black-3)}
 <!-- COURSE / SKILL / PODCAST -->
 <div class="modal-overlay" id="courseModal" onclick="closeMO(event,'courseModal')"><div class="modal-sheet"><div class="modal-handle"></div><div class="modal-title" id="courseModalTitle">Add Course / Cert</div><input type="hidden" id="course-edit-id"><div class="form-group"><label class="form-label">Course Name</label><input type="text" id="course-name" placeholder="e.g. Security+, AWS SAA"></div><div class="form-group"><label class="form-label">Provider</label><input type="text" id="course-provider" placeholder="e.g. CompTIA, Coursera"></div><div class="form-group form-row-2"><div><label class="form-label">Status</label><select id="course-status"><option>In Progress</option><option>Planned</option><option>Completed</option></select></div><div><label class="form-label">Progress (%)</label><input type="number" id="course-progress" placeholder="0" min="0" max="100"></div></div><button class="btn btn-blue btn-full" id="courseSaveBtn" onclick="saveCourse()">Add Course</button></div></div>
 <div class="modal-overlay" id="skillModal" onclick="closeMO(event,'skillModal')"><div class="modal-sheet"><div class="modal-handle"></div><div class="modal-title" id="skillModalTitle">Add Skill</div><input type="hidden" id="skill-edit-id"><div class="form-group"><label class="form-label">Skill</label><input type="text" id="skill-name" placeholder="e.g. Python, Public Speaking"></div><div class="form-group form-row-2"><div><label class="form-label">Category</label><select id="skill-cat"><option>Technical</option><option>Leadership</option><option>Communication</option><option>Ministry</option><option>Financial</option><option>Other</option></select></div><div><label class="form-label">Level (1-5)</label><input type="number" id="skill-level" placeholder="3" min="1" max="5"></div></div><div class="form-group"><label class="form-label">Notes</label><input type="text" id="skill-notes" placeholder="How are you building this?"></div><button class="btn btn-blue btn-full" id="skillSaveBtn" onclick="saveSkill()">Add Skill</button></div></div>
-<div class="modal-overlay" id="podcastModal" onclick="closeMO(event,'podcastModal')"><div class="modal-sheet"><div class="modal-handle"></div><div class="modal-title" id="podModalTitle">Add Podcast / Content</div><input type="hidden" id="pod-edit-id"><div class="form-group"><label class="form-label">Name</label><input type="text" id="pod-name" placeholder="Podcast or channel name"></div><div class="form-group form-row-2"><div><label class="form-label">Type</label><select id="pod-type"><option>Podcast</option><option>YouTube</option><option>Newsletter</option><option>Other</option></select></div><div><label class="form-label">Frequency</label><select id="pod-freq"><option>Daily</option><option>Weekly</option><option>Monthly</option></select></div></div><div class="form-group"><label class="form-label">Link</label><input type="url" id="pod-link" placeholder="https://..."></div><button class="btn btn-blue btn-full" id="podSaveBtn" onclick="savePodcast()">Add</button></div></div>
 <div class="modal-overlay" id="workLinkModal" onclick="closeMO(event,'workLinkModal')"><div class="modal-sheet"><div class="modal-handle"></div><div class="modal-title" id="wlModalTitle">Add Work Link</div><input type="hidden" id="wl-edit-id"><div class="form-group"><label class="form-label">Name</label><input type="text" id="wl-name" placeholder="e.g. SIEM, Jira, Slack"></div><div class="form-group"><label class="form-label">URL</label><input type="url" id="wl-url" placeholder="https://..."></div><button class="btn btn-blue btn-full" id="wlSaveBtn" onclick="saveWorkLink()">Add Link</button></div></div>
 
 <!-- HABIT MODAL -->
@@ -1272,26 +1287,181 @@ select option{background:var(--black-3)}
 const UID='gabriel',NS=`th_${UID}`;
 const db={get(k){try{return JSON.parse(localStorage.getItem(`${NS}_${k}`))}catch{return null}},set(k,v){localStorage.setItem(`${NS}_${k}`,JSON.stringify(v))}};
 const today=()=>new Date().toISOString().slice(0,10);
+const yesterday=()=>{const d=new Date();d.setDate(d.getDate()-1);return d.toISOString().slice(0,10);};
 const ts=()=>Date.now();
 const fmt$=n=>'$'+Number(n||0).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});
 
 // ════════════════════════════════════════════
 //  INIT
 // ════════════════════════════════════════════
+// ════════════════════════════════════════════
+//  BIBLE READING LOG
+// ════════════════════════════════════════════
+const BIBLE_BOOKS_LIST=["Genesis","Exodus","Leviticus","Numbers","Deuteronomy","Joshua","Judges","Ruth","1 Samuel","2 Samuel","1 Kings","2 Kings","1 Chronicles","2 Chronicles","Ezra","Nehemiah","Esther","Job","Psalms","Proverbs","Ecclesiastes","Song of Solomon","Isaiah","Jeremiah","Lamentations","Ezekiel","Daniel","Hosea","Joel","Amos","Obadiah","Jonah","Micah","Nahum","Habakkuk","Zephaniah","Haggai","Zechariah","Malachi","Matthew","Mark","Luke","John","Acts","Romans","1 Corinthians","2 Corinthians","Galatians","Ephesians","Philippians","Colossians","1 Thessalonians","2 Thessalonians","1 Timothy","2 Timothy","Titus","Philemon","Hebrews","James","1 Peter","2 Peter","1 John","2 John","3 John","Jude","Revelation"];
+function openBibleModal(){
+  document.getElementById('bible-edit-id').value='';
+  document.getElementById('bibleBookSelect').value='';
+  document.getElementById('bibleChapters').value='';
+  document.getElementById('bibleNotesInput').value='';
+  document.getElementById('bibleModalTitle').textContent='Log Bible Reading 📖';
+  document.getElementById('bibleSaveBtn').textContent='Log Reading';
+  openModal('bibleModal');
+}
+function openEditBibleReading(id){
+  const r=(db.get('bibleReadings')||[]).find(x=>x.id===id);if(!r)return;
+  document.getElementById('bible-edit-id').value=id;
+  document.getElementById('bibleBookSelect').value=r.book||'';
+  document.getElementById('bibleChapters').value=r.chapters||'';
+  document.getElementById('bibleNotesInput').value=r.notes||'';
+  document.getElementById('bibleModalTitle').textContent='Edit Reading';
+  document.getElementById('bibleSaveBtn').textContent='Save';
+  openModal('bibleModal');
+}
+function saveBibleReading(){
+  const book=document.getElementById('bibleBookSelect').value;if(!book)return toast('Select a book first');
+  const chapters=document.getElementById('bibleChapters').value.trim();
+  const notes=document.getElementById('bibleNotesInput').value.trim();
+  const eid=document.getElementById('bible-edit-id').value;
+  const readings=db.get('bibleReadings')||[];
+  const obj={book,chapters,notes,date:today()};
+  if(eid){const idx=readings.findIndex(x=>x.id==eid);if(idx>=0)readings[idx]={...readings[idx],...obj};}
+  else readings.unshift({id:ts(),...obj});
+  db.set('bibleReadings',readings);
+  document.getElementById('bible-edit-id').value='';
+  document.getElementById('bibleModalTitle').textContent='Log Bible Reading 📖';
+  document.getElementById('bibleSaveBtn').textContent='Log Reading';
+  closeModal('bibleModal');renderBibleReadings();toast(eid?'Updated ✓':'Reading logged 📖');
+}
+function deleteBibleReading(id){db.set('bibleReadings',(db.get('bibleReadings')||[]).filter(r=>r.id!==id));renderBibleReadings();}
+function renderBibleReadings(){
+  const readings=db.get('bibleReadings')||[],list=document.getElementById('bibleList');
+  if(!list)return;
+  if(!readings.length){list.innerHTML='<div class="empty">Log the books & chapters you\'re reading</div>';return;}
+  list.innerHTML=readings.slice(0,15).map(r=>`<div style="display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:.5px solid var(--grey-1);">
+    <span style="font-family:var(--font-m);font-size:11px;font-weight:600;color:var(--blue);background:var(--blue-dim);padding:4px 8px;border-radius:5px;flex-shrink:0;white-space:nowrap;">${r.book}</span>
+    <div style="flex:1;">
+      ${r.chapters?`<div style="font-size:12px;color:var(--grey-4);">Ch. ${r.chapters}</div>`:''}
+      ${r.notes?`<div style="font-size:13px;color:var(--white-3);">${r.notes}</div>`:''}
+      <div style="font-family:var(--font-m);font-size:10px;color:var(--grey-3);margin-top:2px;">${r.date}</div>
+    </div>
+    <div style="display:flex;gap:6px;flex-shrink:0;">
+      <span onclick="openEditBibleReading(${r.id})" style="color:var(--blue);font-size:14px;cursor:pointer;">✏️</span>
+      <span onclick="deleteBibleReading(${r.id})" style="color:var(--grey-3);cursor:pointer;font-size:18px;">×</span>
+    </div>
+  </div>`).join('');
+}
+
+// ════════════════════════════════════════════
+//  APPLE CALENDAR SYNC
+// ════════════════════════════════════════════
+function saveCalUrl(){
+  const url=document.getElementById('calUrlInput').value.trim();if(!url)return;
+  db.set('appleCalUrl',url);closeModal('calSetupModal');syncAppleCalendar();
+}
+async function syncAppleCalendar(){
+  const url=db.get('appleCalUrl');
+  const statusEl=document.getElementById('calSyncStatus');
+  if(!url){if(statusEl)statusEl.textContent='Not connected — tap ⚙️ to set up';return;}
+  const fetchUrl=url.replace(/^webcal:\/\//i,'https://');
+  if(statusEl)statusEl.textContent='Syncing...';
+  try{
+    const resp=await fetch(fetchUrl);
+    const text=await resp.text();
+    const events=parseICS(text);
+    db.set('calEvents',events);db.set('calLastSync',today());
+    renderCalendarEvents();
+    if(statusEl)statusEl.textContent='Synced: '+today();
+    toast('Calendar synced ✓');
+  }catch(e){
+    if(statusEl)statusEl.textContent='Sync failed — check your calendar link';
+    toast('Calendar sync failed');
+  }
+}
+function parseICS(text){
+  const events=[];
+  const vevents=text.match(/BEGIN:VEVENT[\s\S]*?END:VEVENT/g)||[];
+  vevents.forEach(ve=>{
+    const get=k=>{const m=ve.match(new RegExp(k+'[^:]*:([^\\r\\n]+)'));return m?m[1].trim():'';};
+    const summary=get('SUMMARY');if(!summary)return;
+    const date=parseICSDate(get('DTSTART'));
+    if(date>=today())events.push({id:get('UID')||String(ts()),title:summary,date,desc:get('DESCRIPTION').replace(/\\n/g,' ').slice(0,80)});
+  });
+  return events.sort((a,b)=>a.date.localeCompare(b.date)).slice(0,30);
+}
+function parseICSDate(str){
+  if(!str)return today();
+  const d=str.replace(/T[\s\S]*/,'');
+  return d.length>=8?d.slice(0,4)+'-'+d.slice(4,6)+'-'+d.slice(6,8):today();
+}
+function renderCalendarEvents(){
+  const events=db.get('calEvents')||[],list=document.getElementById('calEventsList');
+  if(!list)return;
+  const statusEl=document.getElementById('calSyncStatus');
+  const lastSync=db.get('calLastSync');
+  if(statusEl&&lastSync)statusEl.textContent='Synced: '+lastSync;
+  if(!events.length){list.innerHTML='<div class="empty">No upcoming events</div>';return;}
+  list.innerHTML=events.slice(0,10).map(e=>`<div style="display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:.5px solid var(--grey-1);">
+    <div style="flex-shrink:0;background:var(--blue-dim);color:var(--blue);border-radius:8px;padding:5px 8px;font-family:var(--font-m);font-size:11px;font-weight:700;text-align:center;min-width:38px;">${e.date.slice(5).replace('-','/')}</div>
+    <div style="flex:1;"><div style="font-size:13px;font-weight:600;">${e.title}</div>${e.desc?`<div style="font-family:var(--font-m);font-size:10px;color:var(--grey-3);margin-top:2px;">${e.desc}</div>`:''}</div>
+  </div>`).join('');
+}
+
+// ════════════════════════════════════════════
+//  APPLE MUSIC PLAYLISTS
+// ════════════════════════════════════════════
+function openEditAppleMusic(id){
+  const p=(db.get('appleMusic')||[]).find(x=>x.id===id);if(!p)return;
+  document.getElementById('am-edit-id').value=id;
+  document.getElementById('am-name').value=p.name;
+  document.getElementById('am-url').value=p.url||'';
+  document.getElementById('amModalTitle').textContent='Edit Playlist';
+  document.getElementById('amSaveBtn').textContent='Save';
+  openModal('appleMusicModal');
+}
+function saveAppleMusic(){
+  const name=document.getElementById('am-name').value.trim();if(!name)return;
+  const url=document.getElementById('am-url').value.trim();
+  const eid=document.getElementById('am-edit-id').value;
+  const items=db.get('appleMusic')||[];
+  if(eid){const idx=items.findIndex(x=>x.id==eid);if(idx>=0){items[idx].name=name;items[idx].url=url;}}
+  else items.push({id:ts(),name,url});
+  db.set('appleMusic',items);
+  document.getElementById('am-edit-id').value='';
+  document.getElementById('amModalTitle').textContent='Add Playlist 🎵';
+  document.getElementById('amSaveBtn').textContent='Add Playlist';
+  closeModal('appleMusicModal');renderAppleMusic();toast(eid?'Updated ✓':'Playlist added 🎵');
+}
+function deleteAppleMusic(id){db.set('appleMusic',(db.get('appleMusic')||[]).filter(p=>p.id!==id));renderAppleMusic();}
+function renderAppleMusic(){
+  const items=db.get('appleMusic')||[],list=document.getElementById('appleMusicList');
+  if(!list)return;
+  if(!items.length){list.innerHTML='<div class="empty">Add playlists — tap to open in Apple Music</div>';return;}
+  list.innerHTML=items.map(p=>`<div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:.5px solid var(--grey-1);">
+    <div style="width:38px;height:38px;border-radius:9px;background:rgba(252,60,68,.15);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🎵</div>
+    <div style="flex:1;cursor:pointer;" onclick="window.open('${p.url||'#'}','_blank')">
+      <div style="font-size:14px;font-weight:600;">${p.name}</div>
+      <div style="font-family:var(--font-m);font-size:10px;color:#fc3c44;margin-top:2px;">Open in Apple Music ↗</div>
+    </div>
+    <span onclick="openEditAppleMusic(${p.id})" style="color:var(--blue);font-size:14px;cursor:pointer;flex-shrink:0;">✏️</span>
+    <span onclick="deleteAppleMusic(${p.id})" style="color:var(--grey-3);font-size:18px;cursor:pointer;flex-shrink:0;">×</span>
+  </div>`).join('');
+}
+
 function init(){
-  setHeader();seedDefaults();
+  setHeader();seedDefaults();checkStreakResets();
   renderHabits();renderTodos();loadDailyTexts();loadQuote();
   renderReminders();renderNotes();
-  renderHearings();loadWarTexts();renderBibleReadings();renderSpiritBooks();
+  renderHearings();renderAppleMusic();
   renderPrayerTopics();
   renderFlock('all');
   renderChurchDataHistory();
   renderGoals('all');renderVision();
   renderFinance();
   renderHealthDashboard();renderWaterUI();renderWorkouts();renderSleepList();renderBodyList();
-  renderBooks();renderCourses();renderSkills();renderPodcasts();
-  renderWorkLinks();loadWorkNotes();
-  initFinHabits();initHealthHabits();
+  renderBibleReadings();renderBooks();
+  renderCourses();renderSkills();
+  renderWorkLinks();
+  renderCalendarEvents();
   updateStats();
 }
 
@@ -1306,6 +1476,8 @@ function seedDefaults(){
     {id:'prayer',name:'Morning Prayer',emoji:'🙏'},{id:'bible',name:'Read Bible',emoji:'📖'},
     {id:'worship',name:'Worship',emoji:'🎵'},{id:'workout',name:'Workout',emoji:'💪'},
     {id:'water',name:'Drink 8 Cups',emoji:'💧'},{id:'noscroll',name:'No Mindless Scrolling',emoji:'📵'},
+    {id:'tithe',name:'Tithed',emoji:'💰'},{id:'noimpulse',name:'No Impulse Purchases',emoji:'🛑'},
+    {id:'steps10k',name:'10k Steps',emoji:'👟'},{id:'vitamins',name:'Took Vitamins',emoji:'💊'},
   ]);
   if(!db.get('goals'))db.set('goals',[
     {id:1,title:'Get Security+ Certified',why:'Level up my career.',category:'career',deadline:'2025-09-30',expanded:false,milestones:[{id:1.1,text:'Complete study guide',done:false},{id:1.2,text:'3 practice exams',done:false},{id:1.3,text:'Schedule exam',done:false},{id:1.4,text:'Pass!',done:false}]},
@@ -1320,8 +1492,6 @@ function seedDefaults(){
     {id:ts()+5,name:'Personal Growth',icon:'🌱',desc:'Becoming who God called me to be',sessions:[]},
   ]);
   if(!db.get('bills'))seedBills();
-  if(!db.get('finHabits'))db.set('finHabits',[{id:'budget',name:'Stuck to budget',done:false},{id:'invest',name:'Investment contribution',done:false},{id:'noimpulse',name:'No impulse purchases',done:false},{id:'tithe',name:'Tithed',done:false}]);
-  if(!db.get('healthHabits'))db.set('healthHabits',[{id:'steps10k',name:'10k steps',done:false},{id:'stretch',name:'Stretched / Recovery',done:false},{id:'nomeal',name:'No junk food',done:false},{id:'vitamins',name:'Took vitamins',done:false}]);
   if(!db.get('books'))seedBooks();
 }
 
@@ -1345,15 +1515,17 @@ function seedBills(){
 
 function seedBooks(){
   db.set('books',[
-    {id:1,title:'Why Non-Tithing Christians Become Poor',author:'Dag Heward-Mills',status:'Reading',progress:0,notes:'By Dag Heward-Mills',epub:'book1.epub'},
-    {id:2,title:'The Beauty, The Beast and The Pastor',author:'Dag Heward-Mills',status:'Want to Read',progress:0,notes:'By Dag Heward-Mills',epub:'book2.epub'},
+    {id:1,title:'Steps to the Anointing',author:'Dag Heward-Mills',status:'Reading',progress:0,notes:'',epub:'Steps to the Anointing - Dag Heward-Mills.epub'},
+    {id:2,title:'Anointed For Ministry',author:'Dag Heward-Mills',status:'Want to Read',progress:0,notes:'',epub:'Anointed For Ministry - Dag Heward-Mills.epub'},
+    {id:3,title:'How To Become An Anointed Pastor',author:'Dag Heward-Mills',status:'Want to Read',progress:0,notes:'',epub:'How To Become An Anointed Pastor - Dag Heward-Mills.epub'},
+    {id:4,title:'Good Assistants and Bad Assistants',author:'Dag Heward-Mills',status:'Want to Read',progress:0,notes:'',epub:'Good Assistants and Bad Assistant - Dag Heward-Mills.epub'},
   ]);
 }
 
 // ════════════════════════════════════════════
 //  NAV
 // ════════════════════════════════════════════
-const ALL_TABS=['daily','war','goals','work','life','finance','health','ai','reminders','calendar','family'];
+const ALL_TABS=['daily','war','goals','work','life','finance','health','reminders','calendar'];
 function showTab(id,btn){ALL_TABS.forEach(t=>document.getElementById(`sec-${t}`)?.classList.remove('active'));document.getElementById(`sec-${id}`)?.classList.add('active');document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));if(btn)btn.classList.add('active');window.scrollTo(0,0);}
 function toggleMoreDrawer(){document.getElementById('moreDrawer').classList.toggle('open');document.getElementById('drawerOverlay').classList.toggle('open');}
 function closeMoreDrawer(){document.getElementById('moreDrawer').classList.remove('open');document.getElementById('drawerOverlay').classList.remove('open');}
@@ -1487,7 +1659,34 @@ function renderHabits(){
   const done=habits.filter(h=>comp[h.id]).length,pct=habits.length?Math.round(done/habits.length*100):0;
   document.getElementById('habitProgressBar').style.width=pct+'%';document.getElementById('habitProgress').textContent=`${done}/${habits.length}`;
 }
-function toggleHabit(id){const key=`completions_${today()}`,c=db.get(key)||{};c[id]=!c[id];db.set(key,c);const s=db.get('streaks')||{};s[id]=c[id]?(s[id]||0)+1:Math.max(0,(s[id]||1)-1);db.set('streaks',s);renderHabits();updateStats();}
+function toggleHabit(id){
+  const key=`completions_${today()}`,c=db.get(key)||{};
+  c[id]=!c[id];db.set(key,c);
+  const s=db.get('streaks')||{},sd=db.get('streakDates')||{};
+  if(c[id]){
+    // Only count streak once per day
+    if(sd[id]!==today()){
+      const yComp=db.get(`completions_${yesterday()}`)||{};
+      // Continue streak if yesterday was done OR streak was already counted yesterday
+      s[id]=(yComp[id]||sd[id]===yesterday())?(s[id]||0)+1:1;
+      sd[id]=today();
+    }
+  } else {
+    // Uncheck: undo today's streak increment if we counted today
+    if(sd[id]===today()){s[id]=Math.max(0,(s[id]||1)-1);sd[id]=null;}
+  }
+  db.set('streaks',s);db.set('streakDates',sd);
+  renderHabits();updateStats();
+}
+function checkStreakResets(){
+  const habits=db.get('habits')||[],s=db.get('streaks')||{},sd=db.get('streakDates')||{};
+  const yest=yesterday();let changed=false;
+  habits.forEach(h=>{
+    // If last streak date exists and is before yesterday, streak is broken
+    if(s[h.id]>0&&sd[h.id]&&sd[h.id]<yest){s[h.id]=0;changed=true;}
+  });
+  if(changed)db.set('streaks',s);
+}
 
 // ════════════════════════════════════════════
 //  TODOS
@@ -1553,7 +1752,7 @@ function saveReminder(){
   const obj={title,date:document.getElementById('reminderDate').value,time:document.getElementById('reminderTime').value,repeat:document.getElementById('reminderRepeat').value,early:document.getElementById('reminderEarly').value,cat:document.getElementById('reminderCat').value,notes:document.getElementById('reminderNotes').value.trim(),url:document.getElementById('reminderUrl').value.trim()};
   if(eid){const idx=reminders.findIndex(x=>x.id==eid);if(idx>=0)reminders[idx]={...reminders[idx],...obj};}
   else reminders.push({id:ts(),...obj});
-  reminders.sort((a,b)=>a.time.localeCompare(b.time));
+  reminders.sort((a,b)=>(a.time||'').localeCompare(b.time||''));
   db.set('reminders',reminders);
   document.getElementById('reminder-edit-id').value='';
   document.getElementById('reminderModalTitle').textContent='New Reminder 🔔';
@@ -1581,10 +1780,7 @@ function renderNotes(){const notes=db.get('notes')||[],list=document.getElementB
 // ════════════════════════════════════════════
 //  WAR — HEARING
 // ════════════════════════════════════════════
-function toggleQT(){const key=`qt_${today()}`,qt=db.get(key)||{};qt.done=!qt.done;db.set(key,qt);document.getElementById('qtToggle').classList.toggle('on',qt.done);}
-function saveQT(){const key=`qt_${today()}`,qt=db.get(key)||{};qt.notes=document.getElementById('qtNotesTA').value;db.set(key,qt);toast('Notes saved ✓');}
-function saveSeason(){db.set('season_text',document.getElementById('seasonTA').value);toast('Saved ✓');}
-function loadWarTexts(){const qt=db.get(`qt_${today()}`)||{};document.getElementById('qtNotesTA').value=qt.notes||'';if(qt.done)document.getElementById('qtToggle').classList.add('on');document.getElementById('seasonTA').value=db.get('season_text')||'';}
+
 function openEditHearing(id){
   const h=(db.get('hearings')||[]).find(x=>x.id===id);if(!h)return;
   document.getElementById('hearing-edit-id').value=id;
@@ -1611,34 +1807,7 @@ function saveHearing(){
 function deleteHearing(id){db.set('hearings',(db.get('hearings')||[]).filter(h=>h.id!==id));renderHearings();}
 const hEmoji={message:'🎤',playlist:'🎵',podcast:'🎙️',other:'🔗'};
 function renderHearings(){const items=db.get('hearings')||[],list=document.getElementById('hearingList');if(!items.length){list.innerHTML='<div class="empty">Add sermons, playlists, podcasts</div>';return;}list.innerHTML=items.map(h=>`<div style="display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:.5px solid var(--grey-1);"><span style="font-family:var(--font-m);font-size:11px;font-weight:600;color:var(--blue);background:var(--blue-dim);padding:4px 8px;border-radius:5px;flex-shrink:0;">${hEmoji[h.type]||'🔗'}</span><div style="flex:1;"><div style="font-size:13px;">${h.link?`<a href="${h.link}" target="_blank" style="color:var(--white);text-decoration:none;">${h.title}</a>`:h.title}</div></div><div style="display:flex;gap:8px;flex-shrink:0;"><span onclick="openEditHearing(${h.id})" style="color:var(--blue);font-size:14px;cursor:pointer;">✏️</span><span onclick="deleteHearing(${h.id})" style="color:var(--grey-3);cursor:pointer;font-size:18px;">×</span></div></div>`).join('');}
-function saveBibleReading(){const book=document.getElementById('bibleBookInput').value.trim();if(!book)return;const r=db.get('bibleReadings')||[];r.unshift({id:ts(),book,notes:document.getElementById('bibleNotesInput').value.trim(),date:today()});db.set('bibleReadings',r);closeModal('bibleModal');renderBibleReadings();toast('Reading logged 📖');}
-function deleteBibleReading(id){db.set('bibleReadings',(db.get('bibleReadings')||[]).filter(r=>r.id!==id));renderBibleReadings();}
-function renderBibleReadings(){const readings=db.get('bibleReadings')||[],list=document.getElementById('bibleList');if(!readings.length){list.innerHTML='<div class="empty">Log your Bible readings</div>';return;}list.innerHTML=readings.slice(0,8).map(r=>`<div style="display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:.5px solid var(--grey-1);"><span style="font-family:var(--font-m);font-size:11px;font-weight:600;color:var(--blue);background:var(--blue-dim);padding:4px 8px;border-radius:5px;flex-shrink:0;white-space:nowrap;">${r.book}</span><div style="flex:1;"><div style="font-size:13px;color:var(--grey-4);">${r.notes||'No notes'}</div><div style="font-family:var(--font-m);font-size:10px;color:var(--grey-3);margin-top:2px;">${r.date}</div></div><span onclick="deleteBibleReading(${r.id})" style="color:var(--grey-3);cursor:pointer;font-size:18px;flex-shrink:0;">×</span></div>`).join('');}
-function openEditSpiritBook(id){
-  const b=(db.get('spiritBooks')||[]).find(x=>x.id===id);if(!b)return;
-  document.getElementById('sb-edit-id').value=id;
-  document.getElementById('sbTitleInput').value=b.title;
-  document.getElementById('sbAuthorInput').value=b.author||'';
-  document.getElementById('sbNotesInput').value=b.notes||'';
-  document.getElementById('sbModalTitle').textContent='Edit Book';
-  document.getElementById('sbSaveBtn').textContent='Save Book';
-  openModal('spiritBookModal');
-}
-function saveSpiritBook(){
-  const title=document.getElementById('sbTitleInput').value.trim();if(!title)return;
-  const eid=document.getElementById('sb-edit-id').value;
-  const books=db.get('spiritBooks')||[];
-  const obj={title,author:document.getElementById('sbAuthorInput').value.trim(),notes:document.getElementById('sbNotesInput').value.trim()};
-  if(eid){const idx=books.findIndex(x=>x.id==eid);if(idx>=0)books[idx]={...books[idx],...obj};}
-  else books.push({id:ts(),...obj});
-  db.set('spiritBooks',books);
-  document.getElementById('sb-edit-id').value='';
-  document.getElementById('sbModalTitle').textContent='Add Book';
-  document.getElementById('sbSaveBtn').textContent='Add Book';
-  closeModal('spiritBookModal');renderSpiritBooks();toast(eid?'Updated ✓':'Book added ✓');
-}
-function deleteSpiritBook(id){db.set('spiritBooks',(db.get('spiritBooks')||[]).filter(b=>b.id!==id));renderSpiritBooks();}
-function renderSpiritBooks(){const books=db.get('spiritBooks')||[],list=document.getElementById('spiritBookList');if(!books.length){list.innerHTML='<div class="empty">Add books you\'re reading</div>';return;}list.innerHTML=books.map(b=>`<div style="position:relative;background:var(--black-4);border:.5px solid var(--grey-1);border-radius:var(--radius-sm);padding:14px;margin-bottom:8px;"><div style="font-weight:600;color:var(--white);margin-bottom:3px;">📗 ${b.title}</div>${b.author?`<div style="font-size:12px;color:var(--blue);margin-bottom:4px;">${b.author}</div>`:''}${b.notes?`<div style="font-size:13px;color:var(--grey-4);">${b.notes}</div>`:''}<div style="position:absolute;top:10px;right:12px;display:flex;gap:8px;"><span onclick="openEditSpiritBook(${b.id})" style="color:var(--blue);font-size:14px;cursor:pointer;">✏️</span><span onclick="deleteSpiritBook(${b.id})" style="color:var(--grey-3);font-size:16px;cursor:pointer;">×</span></div></div>`).join('');}
+
 
 // ════════════════════════════════════════════
 //  PRAYER BOMB
@@ -1650,7 +1819,7 @@ function savePrayerTopic(){
   const eid=document.getElementById('ptEditId').value;
   if(eid){const idx=topics.findIndex(t=>t.id==eid);if(idx>=0){topics[idx].name=name;topics[idx].icon=document.getElementById('ptIconInput').value.trim()||topics[idx].icon;topics[idx].desc=document.getElementById('ptDescInput').value.trim();}}
   else{topics.push({id:ts(),name,icon:document.getElementById('ptIconInput').value.trim()||'🙏',desc:document.getElementById('ptDescInput').value.trim(),sessions:[]});}
-  db.set('prayerTopics',topics);closeModal('prayerTopicModal');renderPrayerTopics();updateStats();toast('Topic saved ✓');
+  db.set('prayerTopics',topics);document.getElementById('ptEditId').value='';document.getElementById('prayerTopicModalTitle').textContent='New Prayer Topic 💣';closeModal('prayerTopicModal');renderPrayerTopics();updateStats();toast('Topic saved ✓');
 }
 function openEditTopic(id){const topics=db.get('prayerTopics')||[],t=topics.find(x=>x.id===id);if(!t)return;document.getElementById('ptEditId').value=id;document.getElementById('ptNameInput').value=t.name;document.getElementById('ptIconInput').value=t.icon||'';document.getElementById('ptDescInput').value=t.desc||'';document.getElementById('prayerTopicModalTitle').textContent='Edit Prayer Topic';openModal('prayerTopicModal');}
 function deletePrayerTopic(id){showConfirm('Delete Topic','Delete this prayer topic and all its sessions?',()=>{db.set('prayerTopics',(db.get('prayerTopics')||[]).filter(t=>t.id!==id));renderPrayerTopics();updateStats();});}
@@ -1727,7 +1896,7 @@ function archiveMemberFromProfile(){if(!viewingMemberId)return;showConfirm('Arch
 //  CHURCH DATA
 // ════════════════════════════════════════════
 let pendingChurchPhoto=null;
-function saveChurchData(){const data={week:today(),attendance:document.getElementById('cd-attendance').value,salvations:document.getElementById('cd-salvations').value,baptisms:document.getElementById('cd-baptisms').value,offering:document.getElementById('cd-offering').value,notes:document.getElementById('cd-notes').value,photo:pendingChurchPhoto};const h=db.get('churchData')||[];h.unshift(data);db.set('churchData',h.slice(0,52));['cd-attendance','cd-salvations','cd-baptisms','cd-offering','cd-notes'].forEach(i=>document.getElementById(i).value='');document.getElementById('churchPhotoArea').innerHTML='<span style="font-size:28px;">📸</span><span style="font-family:var(--font-m);font-size:11px;color:var(--grey-3);margin-top:6px;">Tap to add photo</span>';pendingChurchPhoto=null;renderChurchDataHistory();toast('Church data saved ✓');}
+function saveChurchData(){const _ex=db.get('churchData')||[];if(_ex.some(d=>d.week===today())){toast('Already logged this week ✓');return;}const data={week:today(),attendance:document.getElementById('cd-attendance').value,salvations:document.getElementById('cd-salvations').value,baptisms:document.getElementById('cd-baptisms').value,offering:document.getElementById('cd-offering').value,notes:document.getElementById('cd-notes').value,photo:pendingChurchPhoto};const h=db.get('churchData')||[];h.unshift(data);db.set('churchData',h.slice(0,52));['cd-attendance','cd-salvations','cd-baptisms','cd-offering','cd-notes'].forEach(i=>document.getElementById(i).value='');document.getElementById('churchPhotoArea').innerHTML='<span style="font-size:28px;">📸</span><span style="font-family:var(--font-m);font-size:11px;color:var(--grey-3);margin-top:6px;">Tap to add photo</span>';pendingChurchPhoto=null;renderChurchDataHistory();toast('Church data saved ✓');}
 // Override the generic photo handler for church
 document.getElementById('churchPhotoInput').onchange=function(e){const file=e.target.files[0];if(!file)return;const r=new FileReader();r.onload=ev=>{pendingChurchPhoto=ev.target.result;const a=document.getElementById('churchPhotoArea');a.innerHTML=`<img src="${ev.target.result}" style="width:100%;height:100%;object-fit:cover;">`};r.readAsDataURL(file);};
 function deleteChurchEntry(week){showConfirm('Delete Entry','Remove this week\'s church data?',()=>{db.set('churchData',(db.get('churchData')||[]).filter(d=>d.week!==week));renderChurchDataHistory();});}
@@ -1931,8 +2100,6 @@ function renderFinance() {
   renderBills();
   renderInvest();
   renderCatBreakdown();
-  initFinHabits();
-
   // Sync debt input
   const debtEl = document.getElementById('snap-debt');
   if (debtEl && !debtEl.value) debtEl.value = getDebt() || '';
@@ -2070,7 +2237,7 @@ function saveSavingsGoal() {
   const deposit = parseFloat(document.getElementById('sg-deposit').value) || 0;
   if (eid) {
     const idx = g.findIndex(x => x.id == eid);
-    if (idx >= 0) { g[idx].name = name; g[idx].target = parseFloat(document.getElementById('sg-target').value) || g[idx].target; g[idx].current = parseFloat(document.getElementById('sg-current').value) || 0; if (deposit) g[idx].current += deposit; }
+    if (idx >= 0) { g[idx].name = name; g[idx].target = parseFloat(document.getElementById('sg-target').value) || g[idx].target; const _sgv=document.getElementById('sg-current').value;if(_sgv!=='')g[idx].current=parseFloat(_sgv)||0; if (deposit) g[idx].current += deposit; }
   } else g.push({ id: ts(), name, target: parseFloat(document.getElementById('sg-target').value) || 0, current: parseFloat(document.getElementById('sg-current').value) || 0 });
   db.set('savingsGoals', g);
   document.getElementById('sg-edit-id').value = '';
@@ -2183,19 +2350,13 @@ function renderInvest() {
   list.innerHTML = accounts.map(a => `<div class="invest-row"><div><div style="font-size:14px;font-weight:600;">📈 ${a.name}</div><div style="font-family:var(--font-m);font-size:10px;color:var(--grey-3);margin-top:2px;">${a.type}</div></div><div style="display:flex;align-items:center;gap:8px;"><span style="font-family:var(--font-m);font-size:15px;font-weight:600;color:var(--green);">${fmt$(a.balance)}</span>${a.link ? `<a href="${a.link}" target="_blank" class="bill-pay-btn">View</a>` : ''}<span onclick="openEditInvest(${a.id})" style="color:var(--blue);cursor:pointer;font-size:14px;">✏️</span><span onclick="deleteInvest(${a.id})" style="color:var(--grey-3);cursor:pointer;">×</span></div></div>`).join('');
 }
 
-function initFinHabits() {
-  const h = db.get('finHabits') || [], list = document.getElementById('finHabitList');
-  if (!list) return;
-  list.innerHTML = h.map(x => `<div class="habit-row${x.done ? ' done' : ''}" onclick="toggleFinHabit('${x.id}')"><div class="habit-info"><div class="habit-name-text">${x.name}</div></div><div class="ios-check${x.done ? ' done' : ''}">${x.done ? '✓' : ''}</div></div>`).join('');
-}
-function toggleFinHabit(id) { const h = db.get('finHabits') || [], i = h.find(x => x.id === id); if (i) i.done = !i.done; db.set('finHabits', h); initFinHabits(); }
+
 
 // ════════════════════════════════════════════
 //  HEALTH
 // ════════════════════════════════════════════
 function renderHealthDashboard(){const t=today(),water=db.get(`water_${t}`)||0,steps=db.get(`steps_${t}`)||0,sleep=db.get(`sleep_${t}`),body=db.get('bodyLast');document.getElementById('h-water').textContent=water;document.getElementById('h-steps').textContent=steps.toLocaleString();document.getElementById('h-sleep').textContent=sleep||'—';document.getElementById('h-weight').textContent=body?.weight||'—';const si=document.getElementById('steps-input');if(si&&!si.value&&steps)si.value=steps;updateBMI();}
 function quickLogSteps(){const v=parseInt(document.getElementById('steps-input').value)||0;db.set(`steps_${today()}`,v);document.getElementById('h-steps').textContent=v.toLocaleString();}
-function quickLogSleep(){const v=document.getElementById('sleep-input').value;db.set(`sleep_${today()}`,v);document.getElementById('h-sleep').textContent=v||'—';}
 function renderWaterUI(){const t=today(),count=db.get(`water_${t}`)||0;document.getElementById('waterCount').textContent=count;const circles=document.getElementById('waterCircles');circles.innerHTML='';for(let i=0;i<8;i++){const d=document.createElement('div');d.className=`water-cup${i<count?' filled':''}`;d.textContent='💧';d.onclick=()=>{db.set(`water_${today()}`,i<count?i:i+1);renderWaterUI();renderHealthDashboard();};circles.appendChild(d);}}
 function addWater(){const cur=db.get(`water_${today()}`)||0;if(cur>=8){toast('8 cups done! 🎉');return;}db.set(`water_${today()}`,cur+1);renderWaterUI();renderHealthDashboard();}
 function resetWater(){db.set(`water_${today()}`,0);renderWaterUI();renderHealthDashboard();}
@@ -2232,8 +2393,6 @@ function logBody(){const weight=document.getElementById('body-weight').value;if(
 function updateBMI(){const last=db.get('bodyLast');if(!last?.weight||!last?.height)return;const bmi=(last.weight/(last.height*last.height)*703).toFixed(1);const el=document.getElementById('bmiVal');if(el){el.textContent=bmi;el.style.color=bmi<18.5?'var(--blue)':bmi<25?'var(--green)':bmi<30?'var(--amber)':'var(--red)';}}
 function deleteBodyEntry(id){db.set('bodyLog',(db.get('bodyLog')||[]).filter(x=>x.id!==id));renderBodyList();renderHealthDashboard();}
 function renderBodyList(){const b=db.get('bodyLog')||[],list=document.getElementById('bodyList');if(!list||!b.length){if(list)list.innerHTML='<div class="empty">No metrics logged yet</div>';return;}list.innerHTML=b.slice(0,10).map(x=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:.5px solid var(--grey-1);"><span style="font-family:var(--font-m);font-size:11px;color:var(--grey-3);">${x.date}${x.notes?' · '+x.notes:''}</span><div style="display:flex;align-items:center;gap:10px;"><span style="font-family:var(--font-m);font-size:15px;font-weight:600;">${x.weight} lbs</span><span onclick="deleteBodyEntry(${x.id})" style="color:var(--grey-3);cursor:pointer;font-size:18px;">×</span></div></div>`).join('');}
-function initHealthHabits(){const h=db.get('healthHabits')||[],list=document.getElementById('healthHabitList');if(!list)return;list.innerHTML=h.map(x=>`<div class="habit-row${x.done?' done':''}" onclick="toggleHealthHabit('${x.id}')"><div class="habit-info"><div class="habit-name-text">${x.name}</div></div><div class="ios-check${x.done?' done':''}">${x.done?'✓':''}</div></div>`).join('');}
-function toggleHealthHabit(id){const h=db.get('healthHabits')||[],i=h.find(x=>x.id===id);if(i)i.done=!i.done;db.set('healthHabits',h);initHealthHabits();}
 
 // ════════════════════════════════════════════
 //  LIFE — BOOKS + EPUB
@@ -2328,33 +2487,6 @@ function saveSkill(){
 function deleteSkill(id){db.set('skills',(db.get('skills')||[]).filter(s=>s.id!==id));renderSkills();}
 const stars=n=>'★'.repeat(n)+'☆'.repeat(5-n);
 function renderSkills(){const items=db.get('skills')||[],list=document.getElementById('skillList');if(!items.length){list.innerHTML='<div class="empty">Add skills you\'re developing</div>';return;}list.innerHTML=items.map(s=>`<div class="habit-row"><div class="habit-info"><div class="habit-name-text">${s.name}</div><div class="habit-streak-text">${s.cat} · <span style="color:var(--amber);">${stars(s.level)}</span>${s.notes?' · '+s.notes:''}</div></div><span onclick="openEditSkill(${s.id})" style="color:var(--blue);font-size:14px;cursor:pointer;">✏️</span><span onclick="deleteSkill(${s.id})" style="color:var(--grey-3);cursor:pointer;">×</span></div>`).join('');}
-function openEditPodcast(id){
-  const p=(db.get('podcasts')||[]).find(x=>x.id===id);if(!p)return;
-  document.getElementById('pod-edit-id').value=id;
-  document.getElementById('pod-name').value=p.name;
-  document.getElementById('pod-type').value=p.type||'Podcast';
-  document.getElementById('pod-freq').value=p.freq||'Weekly';
-  document.getElementById('pod-link').value=p.link||'';
-  document.getElementById('podModalTitle').textContent='Edit Podcast';
-  document.getElementById('podSaveBtn').textContent='Save';
-  openModal('podcastModal');
-}
-function savePodcast(){
-  const name=document.getElementById('pod-name').value.trim();if(!name)return;
-  const eid=document.getElementById('pod-edit-id').value;
-  const pods=db.get('podcasts')||[];
-  const obj={name,type:document.getElementById('pod-type').value,freq:document.getElementById('pod-freq').value,link:document.getElementById('pod-link').value.trim()};
-  if(eid){const idx=pods.findIndex(x=>x.id==eid);if(idx>=0)pods[idx]={...pods[idx],...obj};}
-  else pods.push({id:ts(),...obj});
-  db.set('podcasts',pods);
-  document.getElementById('pod-edit-id').value='';
-  document.getElementById('podModalTitle').textContent='Add Podcast / Content';
-  document.getElementById('podSaveBtn').textContent='Add';
-  closeModal('podcastModal');renderPodcasts();toast(eid?'Updated ✓':'Added ✓');
-}
-function deletePodcast(id){db.set('podcasts',(db.get('podcasts')||[]).filter(p=>p.id!==id));renderPodcasts();}
-const pEmoji={Podcast:'🎙️',YouTube:'▶️',Newsletter:'📧',Other:'🔗'};
-function renderPodcasts(){const items=db.get('podcasts')||[],list=document.getElementById('podcastList');if(!items.length){list.innerHTML='<div class="empty">Add podcasts and content</div>';return;}list.innerHTML=items.map(p=>`<div class="habit-row"><span style="font-size:20px;">${pEmoji[p.type]||'🔗'}</span><div class="habit-info"><div class="habit-name-text">${p.link?`<a href="${p.link}" target="_blank" style="color:var(--white);text-decoration:none;">${p.name}</a>`:p.name}</div><div class="habit-streak-text">${p.type} · ${p.freq}</div></div><span onclick="openEditPodcast(${p.id})" style="color:var(--blue);font-size:14px;cursor:pointer;">✏️</span><span onclick="deletePodcast(${p.id})" style="color:var(--grey-3);cursor:pointer;">×</span></div>`).join('');}
 
 // ════════════════════════════════════════════
 //  WORK LINKS
@@ -2399,16 +2531,12 @@ CHURCH (last): ${church[0]?`Attendance ${church[0].attendance}, Salvations ${chu
 HEALTH: Water ${db.get(`water_${today()}`)||0} cups, Steps ${db.get(`steps_${today()}`)||0}
 SNAPSHOT: ${JSON.stringify(db.get('finSnapshot')||{})}`;
 }
-let aiHistory=[];
-async function sendAI(){const input=document.getElementById('aiInput'),msg=input.value.trim();if(!msg)return;input.value='';askAI(msg);}
-async function askAI(msg){const chat=document.getElementById('aiChat');chat.innerHTML+=`<div class="ai-msg user">${msg}</div>`;const thinking=document.createElement('div');thinking.className='ai-msg ai';thinking.innerHTML='<div class="ai-label">Take Heed AI</div>Thinking...';chat.appendChild(thinking);chat.scrollTop=chat.scrollHeight;aiHistory.push({role:'user',content:msg});
-try{const resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:`You are the AI assistant built into Take Heed, Gabriel Williams's personal life OS. You have his real data. Be concise, direct, faith-affirming. His data:\n${getAppContext()}`,messages:aiHistory})});const data=await resp.json();const reply=data.content?.[0]?.text||'Something went wrong.';aiHistory.push({role:'assistant',content:reply});thinking.innerHTML=`<div class="ai-label">Take Heed AI</div>${reply}`;chat.scrollTop=chat.scrollHeight;}catch{thinking.innerHTML='<div class="ai-label">Take Heed AI</div>Network error. Try again.';}}
+
 
 // ════════════════════════════════════════════
 //  WORK NOTES
 // ════════════════════════════════════════════
-function saveWorkNotes(){db.set(`workNotes_${today()}`,document.getElementById('workNotesTA').value);toast('Notes saved ✓');}
-function loadWorkNotes(){const el=document.getElementById('workNotesTA');if(el)el.value=db.get(`workNotes_${today()}`)||'';}
+
 
 // ════════════════════════════════════════════
 //  START
@@ -2417,15 +2545,7 @@ function loadWorkNotes(){const el=document.getElementById('workNotesTA');if(el)e
 document.getElementById('prayerTopicModal').addEventListener('click',e=>{if(e.target.id==='prayerTopicModal'){closeModal('prayerTopicModal');document.getElementById('ptEditId').value='';document.getElementById('prayerTopicModalTitle').textContent='New Prayer Topic 💣';}});
 
 
-// ════════════════════════════════════════════
-//  WEB NOTIFICATIONS
-// ════════════════════════════════════════════
-async function requestNotifPermission() {
-  if (!('Notification' in window)) return false;
-  if (Notification.permission === 'granted') return true;
-  const perm = await Notification.requestPermission();
-  return perm === 'granted';
-}
+
 
 async function scheduleNotification(title, body, delayMs) {
   const granted = await requestNotifPermission();
@@ -2489,104 +2609,11 @@ function initNotifications() {
   }
 }
 
-function showNotifSetup() {
-  if (!('Notification' in window)) {
-    toast('Add to Home Screen first for notifications');
-    return;
-  }
-  if (Notification.permission === 'granted') {
-    toast('Notifications already enabled ✓');
-    scheduleNotification('Take Heed ✓', 'Notifications are working!', 500);
-    return;
-  }
-  requestNotifPermission().then(granted => {
-    if (granted) {
-      toast('Notifications enabled ✓');
-      scheduleNotification('Take Heed ✓', 'You\'ll get reminders and bill alerts here.', 1000);
-    } else {
-      toast('Enable in Settings → Safari → Notifications');
-    }
-  });
-}
 
-// ════════════════════════════════════════════
-//  AI MORNING BRIEFING
-// ════════════════════════════════════════════
-async function getMorningBriefing() {
-  const card = document.getElementById('briefing-card');
-  const textEl = document.getElementById('briefing-text');
-  if (!card || !textEl) return;
 
-  card.style.display = 'block';
-  textEl.textContent = 'Generating your briefing...';
 
-  // Build context
-  const todos = (db.get('todos') || []).filter(t => !t.done);
-  const habits = db.get('habits') || [];
-  const comp = db.get(`completions_${today()}`) || {};
-  const doneh = habits.filter(h => comp[h.id]).length;
-  const topics = db.get('prayerTopics') || [];
-  const weekAgo = new Date(Date.now()-7*86400000).toISOString().slice(0,10);
-  const weekMins = topics.reduce((a,t)=>a+(t.sessions||[]).filter(s=>s.date>=weekAgo).reduce((s,x)=>s+(x.duration||0),0),0);
-  const bills = db.get('bills') || [];
-  const now = new Date();
-  const todayDay = now.getDate();
-  const upcomingBills = bills.filter(b=>b.dayOfMonth && b.dayOfMonth >= todayDay && b.dayOfMonth - todayDay <= 7);
-  const savings = db.get('savingsGoals') || [];
-  const income = INCOME();
-  const billsTotal = getBillsTotal();
-  const left = Math.max(0, income - billsTotal);
-
-  const prompt = `Give Gabriel Williams a concise, encouraging morning briefing (4-6 short bullet points max). Speak directly to him. Be real, not generic. Be faith-affirming. Use emojis.
-
-His data:
-- Habits today: ${doneh}/${habits.length} done
-- Tasks pending: ${todos.length} (top: "${todos[0]?.text || 'none'}")
-- Prayer this week: ${(weekMins/60).toFixed(1)} hours
-- Bills due next 7 days: ${upcomingBills.map(b=>b.name+' '+fmt$(b.amount)+' day '+b.dayOfMonth).join(', ')||'none'}
-- Monthly breathing room: ${fmt$(left)} after bills
-- Savings goals: ${savings.map(g=>g.name+' '+Math.round(g.current/g.target*100||0)+'%').join(', ')||'none'}
-- Today: ${new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'})}`;
-
-  try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 400,
-        system: 'You are a personal life coach and faith mentor for Gabriel Williams, a 20-something Security Engineer and Pastor in Houston. Give sharp, real, encouraging briefings. No fluff. Max 6 bullet points.',
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-    const data = await resp.json();
-    const reply = data.content?.[0]?.text || 'Could not generate briefing.';
-    textEl.innerHTML = reply.replace(/\n/g, '<br>').replace(/•/g, '·');
-  } catch(e) {
-    textEl.textContent = 'Network error. Check your connection.';
-  }
-}
-
-// ════════════════════════════════════════════
-//  NOTIFICATION ENABLE BUTTON in reminders page
-// ════════════════════════════════════════════
-function addNotifButtonToReminders() {
-  const page = document.getElementById('sec-reminders');
-  if (!page || page.querySelector('.notif-setup-btn')) return;
-  const btn = document.createElement('div');
-  btn.className = 'notif-setup-btn';
-  btn.style.cssText = 'margin:0 16px 12px;';
-  btn.innerHTML = `<button class="btn btn-blue btn-full" onclick="showNotifSetup()" style="font-size:14px;">
-    🔔 Enable Push Notifications
-  </button>
-  <div style="font-family:var(--font-m);font-size:10px;color:var(--grey-3);text-align:center;margin-top:6px;">Required for bill alerts and reminder pings</div>`;
-  const header = page.querySelector('.page-header');
-  if (header) header.insertAdjacentElement('afterend', btn);
-}
 
 init();
-initNotifications();
-addNotifButtonToReminders();
 </script>
 </body>
 </html>
